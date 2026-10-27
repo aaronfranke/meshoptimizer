@@ -913,8 +913,8 @@ static size_t bvhPivot(const float* areas, const unsigned int* vertices, size_t 
 
 		// use vertex fill when splitting vertex limited clusters; note that we use the same (left->right) vertex count
 		// using bidirectional vertex counts is a little more expensive to compute and produces slightly worse results in practice
-		size_t lfill = vertices ? vertices[i] : lsplit;
-		size_t rfill = vertices ? vertices[i] : rsplit;
+		size_t lfill = vertices ? size_t(vertices[i]) : lsplit;
+		size_t rfill = vertices ? size_t(vertices[i]) : rsplit;
 
 		// fill cost; use floating point math to round up to maxfill to avoid expensive integer modulo
 		int lrest = int(float(int(lfill + maxfill - 1)) * rmaxfill) * int(maxfill) - int(lfill);
@@ -957,7 +957,7 @@ static void bvhSplit(const BVHBox* boxes, unsigned int* orderx, unsigned int* or
 	unsigned int* axes[3] = {orderx, ordery, orderz};
 
 	// we can use step=1 unconditionally but to reduce the cost for min=max case we use step=max
-	size_t step = min_triangles == max_triangles && count > max_triangles ? max_triangles : 1;
+	size_t step = min_triangles == max_triangles && count > max_triangles ? max_triangles : size_t(1);
 
 	// if we could not pack the meshlet, we must be vertex bound
 	size_t mint = count <= max_triangles && max_vertices / 3 < min_triangles ? max_vertices / 3 : min_triangles;

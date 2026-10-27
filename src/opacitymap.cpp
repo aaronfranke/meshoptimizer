@@ -52,8 +52,8 @@ static float sampleTexture(const Texture& texture, float u, float v)
 
 	// clamp the offsets instead of wrapping for simplicity and performance
 	size_t offset = size_t(y) * texture.pitch + x * texture.stride;
-	size_t offsetx = (x + 1 < int(texture.width)) ? texture.stride : 0;
-	size_t offsety = (y + 1 < int(texture.height)) ? texture.pitch : 0;
+	size_t offsetx = (x + 1 < int(texture.width)) ? texture.stride : size_t(0);
+	size_t offsety = (y + 1 < int(texture.height)) ? texture.pitch : size_t(0);
 
 	unsigned char a00 = texture.data[offset];
 	unsigned char a10 = texture.data[offset + offsetx];

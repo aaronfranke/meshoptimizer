@@ -88,10 +88,10 @@ static void printMeshStats(const std::vector<Mesh>& meshes, const char* name)
 	{
 		const Mesh& mesh = meshes[i];
 
-		size_t triangles = mesh.type == cgltf_primitive_type_triangles ? mesh.indices.size() / 3 : 0;
+		size_t triangles = mesh.type == cgltf_primitive_type_triangles ? mesh.indices.size() / 3 : size_t(0);
 
 		mesh_triangles += triangles;
-		mesh_vertices += mesh.streams.empty() ? 0 : mesh.streams[0].data.size();
+		mesh_vertices += mesh.streams.empty() ? size_t(0) : mesh.streams[0].data.size();
 
 		size_t instances = std::max(size_t(1), mesh.nodes.size() + mesh.instances.size());
 
@@ -213,7 +213,7 @@ static bool printReport(const char* path, const std::vector<BufferView>& views, 
 	{
 		const Mesh& mesh = meshes[i];
 
-		size_t triangles = mesh.type == cgltf_primitive_type_triangles ? mesh.indices.size() / 3 : 0;
+		size_t triangles = mesh.type == cgltf_primitive_type_triangles ? mesh.indices.size() / 3 : size_t(0);
 		size_t instances = std::max(size_t(1), mesh.nodes.size() + mesh.instances.size());
 
 		total_triangles += triangles * instances;
@@ -1338,7 +1338,7 @@ unsigned int textureMask(const char* arg)
 	while (arg)
 	{
 		const char* comma = strchr(arg, ',');
-		size_t seg = comma ? comma - arg : strlen(arg);
+		size_t seg = comma ? size_t(comma - arg) : strlen(arg);
 
 		if (seg == 5 && strncmp(arg, "color", seg) == 0)
 			result |= 1 << TextureKind_Color;

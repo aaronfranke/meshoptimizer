@@ -31,8 +31,8 @@ static void calculateSortData(float* sort_data, const unsigned int* indices, siz
 
 	for (size_t cluster = 0; cluster < cluster_count; ++cluster)
 	{
-		size_t cluster_begin = clusters[cluster] * 3;
-		size_t cluster_end = (cluster + 1 < cluster_count) ? clusters[cluster + 1] * 3 : index_count;
+		size_t cluster_begin = size_t(clusters[cluster]) * 3;
+		size_t cluster_end = (cluster + 1 < cluster_count) ? size_t(clusters[cluster + 1]) * 3 : index_count;
 		assert(cluster_begin < cluster_end);
 
 		float cluster_area = 0;
@@ -198,7 +198,7 @@ static size_t generateSoftBoundaries(unsigned int* destination, const unsigned i
 	for (size_t it = 0; it < cluster_count; ++it)
 	{
 		size_t start = clusters[it];
-		size_t end = (it + 1 < cluster_count) ? clusters[it + 1] : index_count / 3;
+		size_t end = (it + 1 < cluster_count) ? size_t(clusters[it + 1]) : index_count / 3;
 		assert(start < end);
 
 		// reset cache
@@ -318,11 +318,11 @@ void meshopt_optimizeOverdraw(unsigned int* destination, const unsigned int* ind
 
 	for (size_t it = 0; it < cluster_count; ++it)
 	{
-		unsigned int cluster = sort_order[it];
+		size_t cluster = sort_order[it];
 		assert(cluster < cluster_count);
 
-		size_t cluster_begin = clusters[cluster] * 3;
-		size_t cluster_end = (cluster + 1 < cluster_count) ? clusters[cluster + 1] * 3 : index_count;
+		size_t cluster_begin = size_t(clusters[cluster]) * 3;
+		size_t cluster_end = (cluster + 1 < cluster_count) ? size_t(clusters[cluster + 1]) * 3 : index_count;
 		assert(cluster_begin < cluster_end);
 
 		memcpy(destination + offset, indices + cluster_begin, (cluster_end - cluster_begin) * sizeof(unsigned int));

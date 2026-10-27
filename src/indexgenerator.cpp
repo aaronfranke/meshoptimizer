@@ -761,9 +761,9 @@ size_t meshopt_generateProvokingIndexBuffer(unsigned int* destination, unsigned 
 		// try to rotate triangle such that provoking vertex hasn't been seen before
 		// if multiple vertices are new, prioritize the one with least valence
 		// this reduces the risk that a future triangle will have all three vertices seen
-		unsigned int va = remap[a] == ~0u ? valence[a] : ~0u;
-		unsigned int vb = remap[b] == ~0u ? valence[b] : ~0u;
-		unsigned int vc = remap[c] == ~0u ? valence[c] : ~0u;
+		unsigned int va = remap[a] == ~0u ? unsigned(valence[a]) : ~0u;
+		unsigned int vb = remap[b] == ~0u ? unsigned(valence[b]) : ~0u;
+		unsigned int vc = remap[c] == ~0u ? unsigned(valence[c]) : ~0u;
 
 		if (vb != ~0u && vb <= va && vb <= vc)
 		{

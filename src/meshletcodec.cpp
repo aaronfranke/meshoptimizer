@@ -903,7 +903,7 @@ size_t meshopt_encodeMeshletBound(size_t max_vertices, size_t max_triangles)
 	size_t ctrl_size = (max_vertices + 3) / 4;
 	size_t data_size = (max_vertices + 3) / 4 * 16; // worst case: 16 bytes per vertex group
 
-	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : 0;
+	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : size_t(0);
 
 	return codes_size + extra_size + ctrl_size + data_size + gap_size;
 }
@@ -930,7 +930,7 @@ size_t meshopt_encodeMeshlet(unsigned char* buffer, size_t buffer_size, const un
 
 	// we need to ensure that up to 16 bytes after extra+data are available for SIMD decoding
 	// to minimize overhead, we place fixed-size codes+control at the end of the buffer
-	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : 0;
+	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : size_t(0);
 
 	size_t result = codes_size + extra_size + ctrl_size + data_size + gap_size;
 
@@ -989,7 +989,7 @@ int meshopt_decodeMeshlet(void* vertices, size_t vertex_count, size_t vertex_siz
 	// layout must match encoding
 	size_t codes_size = (triangle_count + 1) / 2;
 	size_t ctrl_size = (vertex_count + 3) / 4;
-	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : 0;
+	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : size_t(0);
 
 	if (buffer_size < codes_size + ctrl_size + gap_size)
 		return -2;
@@ -1021,7 +1021,7 @@ int meshopt_decodeMeshletRaw(unsigned int* vertices, size_t vertex_count, unsign
 	// layout must match encoding
 	size_t codes_size = (triangle_count + 1) / 2;
 	size_t ctrl_size = (vertex_count + 3) / 4;
-	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : 0;
+	size_t gap_size = (codes_size + ctrl_size < 16) ? 16 - (codes_size + ctrl_size) : size_t(0);
 
 	if (buffer_size < codes_size + ctrl_size + gap_size)
 		return -2;

@@ -22,7 +22,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* buffer, size_t size)
 	}
 
 	unsigned int ib[999];
-	int indices = (size - 1) < 999 ? (size - 1) / 3 * 3 : 999;
+	int indices = (size - 1) < 999 ? int(size - 1) / 3 * 3 : 999;
 
 	for (int i = 0; i < indices; ++i)
 		ib[i] = buffer[1 + i] % 100;

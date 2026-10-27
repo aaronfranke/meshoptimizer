@@ -331,7 +331,7 @@ meshopt_Bounds meshopt_computeMeshletBounds(const unsigned int* meshlet_vertices
 		indices[i] = index;
 
 		// meshlet_vertices[] slice should only contain vertices used by triangle indices, which is the case for any well formed meshlet
-		corner_count = t >= corner_count ? t + 1 : corner_count;
+		corner_count = t >= corner_count ? size_t(t) + 1 : corner_count;
 	}
 
 	return computeClusterBounds(indices, triangle_count * 3, meshlet_vertices, corner_count, vertex_positions, vertex_positions_stride);
@@ -354,7 +354,7 @@ meshopt_Bounds meshopt_computeSphereBounds(const float* positions, size_t count,
 	const float rzero = 0.f;
 
 	float psphere[4] = {};
-	computeBoundingSphere<7>(psphere, positions, count, positions_stride, radii ? radii : &rzero, radii ? radii_stride : 0);
+	computeBoundingSphere<7>(psphere, positions, count, positions_stride, radii ? radii : &rzero, radii ? radii_stride : size_t(0));
 
 	bounds.center[0] = psphere[0];
 	bounds.center[1] = psphere[1];

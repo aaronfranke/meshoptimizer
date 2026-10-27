@@ -136,8 +136,8 @@ void testFile(const char* path, int level, Stats* stats = 0)
 
 	const char* name0 = strchr(strchr(name, '_') + 1, '_') + 1;
 	const char* name1 = strstr(name0, "_R");
-	size_t namel = name1 ? name1 - name0 : strlen(name0);
-	namel = namel > 25 ? 25 : namel;
+	size_t namel = name1 ? size_t(name1 - name0) : strlen(name0);
+	namel = namel > 25 ? size_t(25) : namel;
 
 #if TRACE
 	printf("%.*s: %s\n", int(namel), name0, path);

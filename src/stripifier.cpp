@@ -322,5 +322,5 @@ size_t meshopt_unstripifyBound(size_t index_count)
 {
 	assert(index_count == 0 || index_count >= 3);
 
-	return (index_count == 0) ? 0 : (index_count - 2) * 3;
+	return (index_count == 0) ? size_t(0) : (index_count - 2) * 3;
 }

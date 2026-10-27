@@ -33,7 +33,7 @@ std::string getFullPath(const char* path, const char* base_path)
 	std::string result = base_path;
 
 	std::string::size_type slash = result.find_last_of("/\\");
-	result.erase(slash == std::string::npos ? 0 : slash + 1);
+	result.erase(slash == std::string::npos ? size_t(0) : slash + 1);
 
 	result += path;
 

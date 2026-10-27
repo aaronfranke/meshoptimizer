@@ -193,7 +193,7 @@ static size_t encodeBytesGroupMeasure(const unsigned char* buffer, int bits)
 	assert(kByteGroupSize == sizeof(unsigned long long) * 2);
 
 	if (bits == 0)
-		return encodeBytesGroupZero(buffer) ? 0 : size_t(-1);
+		return encodeBytesGroupZero(buffer) ? size_t(0) : size_t(-1);
 
 	if (bits == 8)
 		return kByteGroupSize;
@@ -432,7 +432,7 @@ static int estimateChannel(const unsigned char* vertex_data, size_t vertex_count
 		size_t block_size = i + vertex_block_size < vertex_count ? vertex_block_size : vertex_count - i;
 		size_t block_size_aligned = (block_size + kByteGroupSize - 1) & ~(kByteGroupSize - 1);
 
-		memcpy(last_vertex, vertex_data + (i == 0 ? 0 : i - 1) * vertex_size, vertex_size);
+		memcpy(last_vertex, vertex_data + (i == 0 ? size_t(0) : i - 1) * vertex_size, vertex_size);
 
 		// we sometimes encode elements we didn't fill when rounding to kByteGroupSize
 		if (block_size < block_size_aligned)
@@ -532,7 +532,7 @@ static unsigned char* encodeVertexBlock(unsigned char* data, unsigned char* data
 	// we sometimes encode elements we didn't fill when rounding to kByteGroupSize
 	memset(buffers, 0, sizeof(buffers));
 
-	size_t control_size = version == 0 ? 0 : vertex_size / 4;
+	size_t control_size = version == 0 ? size_t(0) : vertex_size / 4;
 	if (size_t(data_end - data) < control_size)
 		return NULL;
 
@@ -733,7 +733,7 @@ static const unsigned char* decodeVertexBlock(const unsigned char* data, const u
 	unsigned char* target = transposed;
 #endif
 
-	size_t control_size = version == 0 ? 0 : vertex_size / 4;
+	size_t control_size = version == 0 ? size_t(0) : vertex_size / 4;
 	if (size_t(data_end - data) < control_size)
 		return NULL;
 
@@ -1545,7 +1545,7 @@ static const unsigned char* decodeVertexBlockSimd(const unsigned char* data, con
 	unsigned char* target = transposed;
 #endif
 
-	size_t control_size = version == 0 ? 0 : vertex_size / 4;
+	size_t control_size = version == 0 ? size_t(0) : vertex_size / 4;
 	if (size_t(data_end - data) < control_size)
 		return NULL;
 
@@ -1687,7 +1687,7 @@ size_t meshopt_encodeVertexBufferLevel(unsigned char* buffer, size_t buffer_size
 		vertex_offset += block_size;
 	}
 
-	size_t tail_size = vertex_size + (version == 0 ? 0 : vertex_size / 4);
+	size_t tail_size = vertex_size + (version == 0 ? size_t(0) : vertex_size / 4);
 	size_t tail_size_min = version == 0 ? kTailMinSizeV0 : kTailMinSizeV1;
 	size_t tail_size_pad = tail_size < tail_size_min ? tail_size_min : tail_size;
 
@@ -1853,7 +1853,7 @@ int meshopt_decodeVertexBuffer(void* destination, size_t vertex_count, size_t ve
 	if (version > kDecodeVertexVersion)
 		return -1;
 
-	size_t tail_size = vertex_size + (version == 0 ? 0 : vertex_size / 4);
+	size_t tail_size = vertex_size + (version == 0 ? size_t(0) : vertex_size / 4);
 	size_t tail_size_min = version == 0 ? kTailMinSizeV0 : kTailMinSizeV1;
 	size_t tail_size_pad = tail_size < tail_size_min ? tail_size_min : tail_size;
 

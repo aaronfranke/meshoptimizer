@@ -1311,7 +1311,7 @@ struct meshopt_IndexAdapter<T, true>
 template <typename T>
 inline size_t meshopt_generateVertexRemap(unsigned int* destination, const T* indices, size_t index_count, const void* vertices, size_t vertex_count, size_t vertex_size)
 {
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 
 	return meshopt_generateVertexRemap(destination, indices ? in.data : NULL, index_count, vertices, vertex_count, vertex_size);
 }
@@ -1319,7 +1319,7 @@ inline size_t meshopt_generateVertexRemap(unsigned int* destination, const T* in
 template <typename T>
 inline size_t meshopt_generateVertexRemapMulti(unsigned int* destination, const T* indices, size_t index_count, size_t vertex_count, const meshopt_Stream* streams, size_t stream_count)
 {
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 
 	return meshopt_generateVertexRemapMulti(destination, indices ? in.data : NULL, index_count, vertex_count, streams, stream_count);
 }
@@ -1343,7 +1343,7 @@ inline size_t meshopt_generateVertexRemapCustom(unsigned int* destination, const
 		static int compare(void* context, unsigned int lhs, unsigned int rhs) { return (*static_cast<F*>(context))(lhs, rhs) ? 1 : 0; }
 	};
 
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 
 	return meshopt_generateVertexRemapCustom(destination, indices ? in.data : NULL, index_count, vertex_positions, vertex_count, vertex_positions_stride, &Call::compare, &callback);
 }
@@ -1351,7 +1351,7 @@ inline size_t meshopt_generateVertexRemapCustom(unsigned int* destination, const
 template <typename T>
 inline void meshopt_remapIndexBuffer(T* destination, const T* indices, size_t index_count, const unsigned int* remap)
 {
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 	meshopt_IndexAdapter<T> out(destination, NULL, index_count);
 
 	meshopt_remapIndexBuffer(out.data, indices ? in.data : NULL, index_count, remap);
@@ -1590,7 +1590,7 @@ template <typename T>
 inline size_t meshopt_unstripify(T* destination, const T* indices, size_t index_count, T restart_index)
 {
 	meshopt_IndexAdapter<T> in(NULL, indices, index_count);
-	meshopt_IndexAdapter<T> out(destination, NULL, index_count == 0 ? 0 : (index_count - 2) * 3);
+	meshopt_IndexAdapter<T> out(destination, NULL, index_count == 0 ? size_t(0) : (index_count - 2) * 3);
 
 	return meshopt_unstripify(out.data, in.data, index_count, unsigned(restart_index));
 }
@@ -1687,7 +1687,7 @@ inline void meshopt_spatialSortTriangles(T* destination, const T* indices, size_
 template <typename T>
 inline void meshopt_generateTangents(float* result, const T* indices, size_t index_count, const float* vertex_positions, size_t vertex_count, size_t vertex_positions_stride, const float* vertex_normals, size_t vertex_normals_stride, const float* vertex_uvs, size_t vertex_uvs_stride, unsigned int options)
 {
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 
 	meshopt_generateTangents(result, indices ? in.data : NULL, index_count, vertex_positions, vertex_count, vertex_positions_stride, vertex_normals, vertex_normals_stride, vertex_uvs, vertex_uvs_stride, options);
 }
@@ -1695,7 +1695,7 @@ inline void meshopt_generateTangents(float* result, const T* indices, size_t ind
 template <typename T>
 inline void meshopt_generateNormals(float* result, const T* indices, size_t index_count, const float* vertex_positions, size_t vertex_count, size_t vertex_positions_stride, float crease_angle, float smoothing)
 {
-	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : 0);
+	meshopt_IndexAdapter<T> in(NULL, indices, indices ? index_count : size_t(0));
 
 	meshopt_generateNormals(result, indices ? in.data : NULL, index_count, vertex_positions, vertex_count, vertex_positions_stride, crease_angle, smoothing);
 }

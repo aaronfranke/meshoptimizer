@@ -774,7 +774,7 @@ void clodBuild(clodConfig config, clodMesh mesh, void* output_context, clodOutpu
 		}
 	}
 
-	std::vector<float> dilate_offsets(config.simplify_dilate_borders ? mesh.vertex_count * 4 : 0);
+	std::vector<float> dilate_offsets(config.simplify_dilate_borders ? mesh.vertex_count * 4 : size_t(0));
 	std::vector<unsigned long long> dilate_table;
 
 	// initial clusterization splits the original mesh

@@ -1573,7 +1573,7 @@ void writeAnimation(std::string& json, std::vector<BufferView>& views, std::stri
 
 #ifndef NDEBUG
 		size_t keyframe_size = (track.interpolation == cgltf_interpolation_type_cubic_spline) ? 3 : 1;
-		size_t time_size = track.constant ? 1 : (track.time.empty() ? animation.frames : track.time.size());
+		size_t time_size = track.constant ? size_t(1) : (track.time.empty() ? size_t(animation.frames) : track.time.size());
 
 		assert(track.data.size() == keyframe_size * track.components * time_size);
 #endif
@@ -1591,9 +1591,9 @@ void writeAnimation(std::string& json, std::vector<BufferView>& views, std::stri
 	float animation_period = 1.f / float(settings.anim_freq);
 	float animation_length = float(animation.frames - 1) * animation_period;
 
-	size_t time_accr = needs_time ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, animation.frames, animation_period, settings) : 0;
-	size_t pose_accr = needs_pose ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, 1, 0.f, settings) : 0;
-	size_t range_accr = needs_range ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, 2, animation_length, settings) : 0;
+	size_t time_accr = needs_time ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, animation.frames, animation_period, settings) : size_t(0);
+	size_t pose_accr = needs_pose ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, 1, 0.f, settings) : size_t(0);
+	size_t range_accr = needs_range ? writeAnimationTime(views, json_accessors, accr_offset, animation.start, 2, animation_length, settings) : size_t(0);
 
 	std::string json_samplers;
 	std::string json_channels;

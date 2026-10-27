@@ -83,7 +83,7 @@ static void* MESHOPTIMIZER_ALLOC_CALLCONV cacheAllocate(size_t size)
 	if (local.block && size < global.block_size && local.offset < global.block_size - size)
 	{
 		void* ptr = static_cast<char*>(local.block) + local.offset;
-		local.offset += size ? size : 1;
+		local.offset += size ? size : size_t(1);
 		local.offset = (local.offset + 15) & ~size_t(15); // align future allocations to 16b
 		return ptr;
 	}

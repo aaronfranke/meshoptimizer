@@ -145,7 +145,7 @@ static float vertexScore(const VertexScoreTable* table, int cache_position, unsi
 {
 	assert(cache_position >= -1 && cache_position < int(kCacheSizeMax));
 
-	unsigned int live_triangles_clamped = live_triangles < kValenceMax ? live_triangles : kValenceMax;
+	unsigned int live_triangles_clamped = live_triangles < kValenceMax ? live_triangles : unsigned(kValenceMax);
 
 	return table->cache[1 + cache_position] + table->live[live_triangles_clamped];
 }
@@ -265,7 +265,7 @@ void meshopt_optimizeVertexCacheTable(unsigned int* destination, const unsigned 
 
 		unsigned int* cache_temp = cache;
 		cache = cache_new, cache_new = cache_temp;
-		cache_count = cache_write > cache_size ? cache_size : cache_write;
+		cache_count = cache_write > cache_size ? size_t(cache_size) : cache_write;
 
 		// remove emitted triangle from adjacency data
 		// this makes sure that we spend less time traversing these lists on subsequent iterations
